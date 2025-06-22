@@ -16,7 +16,7 @@ namespace CRUDTests
         {
             countriesService = new CountriesService ();
         }
-
+        #region AddCountry
         //When CountryAddRequest is null, it should throw ArgumentNullException
 
         [Fact]
@@ -76,9 +76,50 @@ namespace CRUDTests
 
             //Act
             CountryResponse response = countriesService.AddCountry(request);
+            List<CountryResponse> countriesFromGetAll = countriesService.GetAllCountries(); 
 
             //Assert
             Assert.True(response.CountryId != Guid.Empty);
+            Assert.Contains(response, countriesFromGetAll);
         }
+
+        #endregion
+
+        #region GetAllCountries
+        //The list of countries should be empty by default (before adding any countries)
+        [Fact]
+        public void GetAllCountries_EmptyList()
+        {
+            List<CountryResponse> actual_country_response_list = countriesService.GetAllCountries();
+            Assert.Empty(actual_country_response_list);
+        }
+
+        [Fact]
+        public void GetAllCountries_AddFewCountries()
+        {
+            //Arrange
+            List<CountryAddRequest> country_request_list = new List<CountryAddRequest>() {
+        new CountryAddRequest() { CountryName = "USA" },
+        new CountryAddRequest() { CountryName = "UK" }
+      };
+
+            //Act
+            List<CountryResponse> countries_list_from_add_country = new List<CountryResponse>();
+
+            foreach (var country in country_request_list)
+            {
+                countries_list_from_add_country.Add(countriesService.AddCountry(country));
+            }
+
+            List<CountryResponse> actualCountryResponseList = countriesService.GetAllCountries();   
+
+            foreach (var expected_country in countries_list_from_add_country)
+            {
+                Assert.Contains(expected_country, actualCountryResponseList);
+            }
+        }
+
+
+        #endregion
     }
 }

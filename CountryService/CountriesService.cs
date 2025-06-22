@@ -38,7 +38,7 @@ namespace CountryService
 
         public List<CountryResponse> GetAllCountries()
         {
-            throw new NotImplementedException();
+            return _countries.Select(c => c.ToCountryresponse()).ToList();
         }
     }
 }

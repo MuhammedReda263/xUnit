@@ -51,6 +51,27 @@ namespace CRUDTests
             Assert.Contains(personResponse, PersonResponseList);
         
         }
+        #endregion
+
+        #region GetPersonByPersonID
+
+        //If we supply null as PersonID, it should return null as PersonResponse
+        [Fact]
+        public void GetPersonByPersonID_NullPersonID()
+        {
+            Guid? personID = null;
+
+            PersonResponse personResponse = _personsService.GetPersonByPersonID(personID);
+
+            Assert.Null(personResponse);
+        }
+
+        //If we supply a valid person id, it should return the valid person details as PersonResponse object
+        [Fact]
+        public void GetPersonByPersonID_WithPersonID()
+        {
+
+        }
             #endregion
         }
 }

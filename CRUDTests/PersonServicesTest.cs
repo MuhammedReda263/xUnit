@@ -64,7 +64,7 @@ namespace CRUDTests
         {
             Guid? personID = null;
 
-            PersonResponse personResponse = _personsService.GetPersonByPersonID(personID);
+            PersonResponse? personResponse = _personsService.GetPersonByPersonID(personID);
 
             Assert.Null(personResponse);
         }
@@ -77,9 +77,59 @@ namespace CRUDTests
             CountryResponse countryResponse =  _countriesService.AddCountry(country_request);
             PersonAddRequest person_request = new PersonAddRequest() { PersonName = "person name...", Email = "email@sample.com", Address = "address", CountryID = countryResponse.CountryId, DateOfBirth = DateTime.Parse("2000-01-01"), Gender = GenderOptions.Male, ReceiveNewsLetters = false };
             PersonResponse person_response_from_add = _personsService.AddPerson(person_request);
-            PersonResponse person_response_from_get = _personsService.GetPersonByPersonID(person_response_from_add.PersonID);
+            PersonResponse? person_response_from_get = _personsService.GetPersonByPersonID(person_response_from_add.PersonID);
             Assert.Equal(person_response_from_add, person_response_from_get);
         }
-            #endregion
+        #endregion
+
+
+        #region GetAllPersons
+
+        //The GetAllPersons() should return an empty list by default
+        [Fact]
+        public void GetAllPersons_EmptyList()
+        { 
+            List<PersonResponse> personResponses = _personsService.GetAllPersons();
+            Assert.Empty(personResponses);
+
         }
+
+
+
+        //First, we will add few persons; and then when we call GetAllPersons(), it should return the same persons that were added
+        [Fact]
+        public void GetAllPersons_AddFewPersons()
+        {
+            CountryAddRequest country_request_1 = new CountryAddRequest() { CountryName = "USA" };
+            CountryAddRequest country_request_2 = new CountryAddRequest() { CountryName = "India" };
+
+            CountryResponse country_response_1 = _countriesService.AddCountry(country_request_1);
+            CountryResponse country_response_2 = _countriesService.AddCountry(country_request_2);
+
+            PersonAddRequest person_request_1 = new PersonAddRequest() { PersonName = "Smith", Email = "smith@example.com", Gender = GenderOptions.Male, Address = "address of smith", CountryID = country_response_1.CountryId, DateOfBirth = DateTime.Parse("2002-05-06"), ReceiveNewsLetters = true };
+
+            PersonAddRequest person_request_2 = new PersonAddRequest() { PersonName = "Mary", Email = "mary@example.com", Gender = GenderOptions.Female, Address = "address of mary", CountryID = country_response_2.CountryId, DateOfBirth = DateTime.Parse("2000-02-02"), ReceiveNewsLetters = false };
+
+            PersonAddRequest person_request_3 = new PersonAddRequest() { PersonName = "Rahman", Email = "rahman@example.com", Gender = GenderOptions.Male, Address = "address of rahman", CountryID = country_response_2.CountryId, DateOfBirth = DateTime.Parse("1999-03-03"), ReceiveNewsLetters = true };
+
+            List<PersonAddRequest> personsAddRequestList = new List<PersonAddRequest>() { person_request_1, person_request_2, person_request_3 };
+            List<PersonResponse> personResponsesFromAdd = new List<PersonResponse>();
+            foreach (var personAddRequest in personsAddRequestList)
+            {
+                PersonResponse personResponse = _personsService.AddPerson(personAddRequest);
+                personResponsesFromAdd.Add(personResponse);
+            }
+
+            List<PersonResponse> personResponsesFromGet = _personsService.GetAllPersons();
+
+            foreach (var personResponse in personResponsesFromAdd)
+            {
+                Assert.Contains(personResponse, personResponsesFromGet);
+            }
+
+        }
+
+        #endregion
+
+    }
 }

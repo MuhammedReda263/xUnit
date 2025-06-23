@@ -24,8 +24,8 @@ namespace ServiceContracts.DTO
         {
            if (obj == null) return false;
            if(obj.GetType() != typeof(PersonResponse)) return false;
-           Person person = (Person) obj;
-           return PersonID == person.PersonID && PersonName == person.PersonName && Email == person.Email && DateOfBirth == person.DateOfBirth && Gender == person.Gender && CountryID == person.CountryID && Address == person.Address && ReceiveNewsLetters == person.ReceiveNewsLetters;
+            PersonResponse PersonResponse = (PersonResponse) obj;
+           return PersonID == PersonResponse.PersonID && PersonName == PersonResponse.PersonName && Email == PersonResponse.Email && DateOfBirth == PersonResponse.DateOfBirth && Gender == PersonResponse.Gender && CountryID == PersonResponse.CountryID && Address == PersonResponse.Address && ReceiveNewsLetters == PersonResponse.ReceiveNewsLetters;
         }
 
         public override int GetHashCode()

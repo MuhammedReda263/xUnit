@@ -53,5 +53,14 @@ namespace Service
         {
             throw new NotImplementedException();
         }
+
+        public PersonResponse? GetPersonByPersonID(Guid? personId)
+        {
+            if (personId == null) return null;
+            Person? person = _personsList.FirstOrDefault(u => u.PersonID == personId);
+            if(person ==null) return null;
+            return person.ToPersonResponse();
+
+        }
     }
 }

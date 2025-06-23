@@ -1,4 +1,5 @@
-﻿using Service;
+﻿using CountryService;
+using Service;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using ServiceContracts.Enums;
@@ -13,9 +14,11 @@ namespace CRUDTests
     public class PersonServicesTest
     {
         private readonly IPersonsService _personsService;
+        private readonly ICountriesService _countriesService;
         public PersonServicesTest() 
         {
         _personsService = new PersonService();
+        _countriesService = new CountriesService();   
         }
 
         #region AddPerson 
@@ -70,7 +73,12 @@ namespace CRUDTests
         [Fact]
         public void GetPersonByPersonID_WithPersonID()
         {
-
+            CountryAddRequest country_request = new CountryAddRequest() { CountryName = "Canada" };
+            CountryResponse countryResponse =  _countriesService.AddCountry(country_request);
+            PersonAddRequest person_request = new PersonAddRequest() { PersonName = "person name...", Email = "email@sample.com", Address = "address", CountryID = countryResponse.CountryId, DateOfBirth = DateTime.Parse("2000-01-01"), Gender = GenderOptions.Male, ReceiveNewsLetters = false };
+            PersonResponse person_response_from_add = _personsService.AddPerson(person_request);
+            PersonResponse person_response_from_get = _personsService.GetPersonByPersonID(person_response_from_add.PersonID);
+            Assert.Equal(person_response_from_add, person_response_from_get);
         }
             #endregion
         }

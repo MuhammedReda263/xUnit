@@ -8,5 +8,7 @@ namespace ServiceContracts
         PersonResponse AddPerson(PersonAddRequest? personAddRequest);
 
         List<PersonResponse> GetAllPersons();
+
+        PersonResponse? GetPersonByPersonID (Guid? personId);
     }
 }

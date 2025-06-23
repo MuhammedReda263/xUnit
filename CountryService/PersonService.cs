@@ -1,9 +1,11 @@
 ﻿using CountryService;
 using Entitys;
+using Service.Helpers;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,10 +37,9 @@ namespace Service
                 throw new ArgumentNullException(nameof(personAddRequest));
             }
 
-            if (string.IsNullOrEmpty(personAddRequest.PersonName))
-            {
-                throw new ArgumentException("Person Can't be blank!");
-            }
+            // Model Validations
+            ValidationHelper.ModelValidation(personAddRequest);
+            //------------------------------------------------
 
             Person person = personAddRequest.ToPerson();
 

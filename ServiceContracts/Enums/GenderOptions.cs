@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ServiceContracts.Enums
 {
-    internal class GenderOptions
+    public enum GenderOptions
     {
+        Male, Female, Other
     }
 }

@@ -160,7 +160,7 @@ namespace CRUDTests
                 personResponsesFromAdd.Add(personResponse);
             }
 
-            List<PersonResponse> persons_list_from_search = _personsService.GetFilteredPersons(nameof(Person.PersonName)," ");
+            List<PersonResponse> persons_list_from_search = _personsService.GetFilteredPersons(nameof(Person.PersonName),"");
 
             foreach (var personResponse in personResponsesFromAdd)
             {

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit.Abstractions;
 
 namespace CRUDTests
 {
@@ -15,10 +16,12 @@ namespace CRUDTests
     {
         private readonly IPersonsService _personsService;
         private readonly ICountriesService _countriesService;
-        public PersonServicesTest() 
+        private readonly ITestOutputHelper _output;
+        public PersonServicesTest(ITestOutputHelper output) 
         {
         _personsService = new PersonService();
-        _countriesService = new CountriesService();   
+        _countriesService = new CountriesService();
+        _output = output;
         }
 
         #region AddPerson 
@@ -78,6 +81,7 @@ namespace CRUDTests
             PersonAddRequest person_request = new PersonAddRequest() { PersonName = "person name...", Email = "email@sample.com", Address = "address", CountryID = countryResponse.CountryId, DateOfBirth = DateTime.Parse("2000-01-01"), Gender = GenderOptions.Male, ReceiveNewsLetters = false };
             PersonResponse person_response_from_add = _personsService.AddPerson(person_request);
             PersonResponse? person_response_from_get = _personsService.GetPersonByPersonID(person_response_from_add.PersonID);
+            _output.WriteLine(person_response_from_get?.PersonName);
             Assert.Equal(person_response_from_add, person_response_from_get);
         }
         #endregion

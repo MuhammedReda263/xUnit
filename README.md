@@ -82,9 +82,9 @@ All features are tested with **xUnit test cases** (Happy & Unhappy paths).
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/MuhammedReda263/xUnit.git
-   cd xUnit
+  - git clone https://github.com/MuhammedReda263/xUnit.git
+   - cd xUnit
 
-dotnet restore
-dotnet run
-dotnet test
+- dotnet restore
+- dotnet run
+- dotnet test

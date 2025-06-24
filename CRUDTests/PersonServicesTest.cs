@@ -279,7 +279,7 @@ namespace CRUDTests
             CountryAddRequest country_add_request = new CountryAddRequest() { CountryName = "UK" };
             CountryResponse country_response_from_add = _countriesService.AddCountry(country_add_request);
 
-            PersonAddRequest person_add_request = new PersonAddRequest() { PersonName = "John", CountryID = country_response_from_add.CountryId };
+            PersonAddRequest person_add_request = new PersonAddRequest() { PersonName = "John", CountryID = country_response_from_add.CountryId, Email = "john@example.com", Address = "address...", Gender = GenderOptions.Male };
             PersonResponse person_response_from_add = _personsService.AddPerson(person_add_request);
 
             PersonUpdateRequest personUpdateRequest = person_response_from_add.ToPersonUpdateRequest();
@@ -317,6 +317,40 @@ namespace CRUDTests
 
         }
 
-            #endregion
+        #endregion
+
+        #region DeletePerson
+
+        //If you supply an valid PersonID, it should return true
+        [Fact]
+        public void DeletePerson_ValidPersonID()
+        {
+            //Arrange
+            CountryAddRequest country_add_request = new CountryAddRequest() { CountryName = "USA" };
+            CountryResponse country_response_from_add = _countriesService.AddCountry(country_add_request);
+
+            PersonAddRequest person_add_request = new PersonAddRequest() { PersonName = "Jones", Address = "address", CountryID = country_response_from_add.CountryId, DateOfBirth = Convert.ToDateTime("2010-01-01"), Email = "jones@example.com", Gender = GenderOptions.Male, ReceiveNewsLetters = true };
+
+            PersonResponse person_response_from_add = _personsService.AddPerson(person_add_request);
+
+            bool exsist = _personsService.DeletePerson(person_response_from_add.PersonID);
+
+            Assert.True(exsist);
         }
+
+        
+        //If you supply an valid PersonID, it should return true
+        [Fact]
+        public void DeletePerson_InValidPersonID()
+        {
+
+            bool exsist = _personsService.DeletePerson(Guid.NewGuid());
+
+            Assert.False(exsist);
+        }
+
+
+        #endregion
+
+    }
 }

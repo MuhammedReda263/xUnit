@@ -158,7 +158,46 @@ namespace Service
 
         public PersonResponse UpdatePerson(PersonUpdateRequest? personUpdateRequest)
         {
-            throw new NotImplementedException();
+            if (personUpdateRequest == null)
+            {
+                throw new ArgumentNullException(nameof(Person));
+            }
+
+            ValidationHelper.ModelValidation(personUpdateRequest);
+
+            Person? matchingPerson = _personsList.FirstOrDefault(temp=>temp.PersonID==personUpdateRequest.PersonID);
+
+            if (matchingPerson == null)
+            {
+                throw new ArgumentException("Given person id doesn't exsist");   
+            }
+
+            matchingPerson.PersonName = personUpdateRequest.PersonName;
+            matchingPerson.Email = personUpdateRequest.Email;
+            matchingPerson.DateOfBirth = personUpdateRequest.DateOfBirth;
+            matchingPerson.Gender = personUpdateRequest.Gender.ToString();
+            matchingPerson.CountryID = personUpdateRequest.CountryID;
+            matchingPerson.Address = personUpdateRequest.Address;
+            matchingPerson.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
+
+            return matchingPerson.ToPersonResponse();
         }
+
+        public bool DeletePerson(Guid? personId)
+        {
+           if (personId == null)
+            {
+                throw new ArgumentNullException(nameof(personId));
+            }
+
+            Person? person = _personsList.FirstOrDefault(temp => temp.PersonID == personId);
+            if (person == null) return false;
+
+            _personsList.RemoveAll(temp => temp.PersonID == personId);
+            return true;
+
+        }
+
     }
 }
+

@@ -249,5 +249,74 @@ namespace CRUDTests
         }
         #endregion
 
-    }
+        #region UpdatePerson
+
+        //When we supply null as PersonUpdateRequest, it should throw ArgumentNullException
+        [Fact]
+        public void UpdatePerson_NullPerson()
+        {
+            PersonUpdateRequest? personUpdateRequest = null;
+            Assert.Throws<ArgumentNullException>(() => { _personsService.UpdatePerson(personUpdateRequest); });
+
+        }
+
+        //When we supply invalid person id, it should throw ArgumentException
+        [Fact]
+        public void UpdatePerson_InvalidPersonID()
+        {
+            PersonUpdateRequest? personUpdateRequest = new PersonUpdateRequest();
+            personUpdateRequest.PersonID = Guid.NewGuid();
+            Assert.Throws<ArgumentException>(() =>
+            {
+                _personsService.UpdatePerson(personUpdateRequest);
+            });
+        }
+
+        //When PersonName is null, it should throw ArgumentException
+        [Fact]
+        public void UpdatePerson_PersonNameIsNull()
+        {
+            CountryAddRequest country_add_request = new CountryAddRequest() { CountryName = "UK" };
+            CountryResponse country_response_from_add = _countriesService.AddCountry(country_add_request);
+
+            PersonAddRequest person_add_request = new PersonAddRequest() { PersonName = "John", CountryID = country_response_from_add.CountryId };
+            PersonResponse person_response_from_add = _personsService.AddPerson(person_add_request);
+
+            PersonUpdateRequest personUpdateRequest = person_response_from_add.ToPersonUpdateRequest();
+
+            personUpdateRequest.PersonName = null;
+
+            Assert.Throws<ArgumentException>(() => {
+                //Act
+                _personsService.UpdatePerson(personUpdateRequest);
+            });
+        }
+
+        //First, add a new person and try to update the person name and email
+        [Fact]
+        public void UpdatePerson_PersonFullDetailsUpdation()
+        {
+            CountryAddRequest country_add_request = new CountryAddRequest() { CountryName = "UK" };
+            CountryResponse country_response_from_add = _countriesService.AddCountry(country_add_request);
+
+            PersonAddRequest person_add_request = new PersonAddRequest() { PersonName = "John", CountryID = country_response_from_add.CountryId, Address = "Abc road", DateOfBirth = DateTime.Parse("2000-01-01"), Email = "abc@example.com", Gender = GenderOptions.Male, ReceiveNewsLetters = true };
+
+            PersonResponse person_response_from_add = _personsService.AddPerson(person_add_request);
+
+            PersonUpdateRequest personUpdateRequest = person_response_from_add.ToPersonUpdateRequest();
+            personUpdateRequest.PersonName = "Muhammed";
+            personUpdateRequest.Email = "Muhammed@gmail.com";
+
+            PersonResponse personResponseFromUpdate = _personsService.UpdatePerson(personUpdateRequest);
+            PersonResponse? personResponseFromGet = _personsService.GetPersonByPersonID(personResponseFromUpdate.PersonID);
+
+            Assert.Equal(personResponseFromUpdate, personResponseFromGet);
+
+
+
+
+        }
+
+            #endregion
+        }
 }

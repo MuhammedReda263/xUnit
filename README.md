@@ -88,3 +88,10 @@ All features are tested with **xUnit test cases** (Happy & Unhappy paths).
 - dotnet restore
 - dotnet run
 - dotnet test
+
+## 👤 Author
+- Muhammed Reda
+- 📧 moreda263@gmail.com
+- 🔗 LinkedIn Profile
+
+

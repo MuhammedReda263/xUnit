@@ -1,4 +1,4 @@
-# 🧪 xUnit Testing - Contacts Manager API
+# xUnit Testing - Contacts Manager API
 
 This project is a **Contacts Manager Web API** built using **ASP.NET Core** with a strong focus on **xUnit Unit Testing**.  
 The goal is to demonstrate writing clean, testable code and verifying it using xUnit tests.

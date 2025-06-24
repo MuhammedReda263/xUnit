@@ -1,97 +1,65 @@
-# xUnit Testing - Contacts Manager API
+# xUnit-ContactsManager-TestingGuide  
+A simple ASP.NET Core project with full CRUD operations and comprehensive xUnit test coverage.
 
-This project is a **Contacts Manager Web API** built using **ASP.NET Core** with a strong focus on **xUnit Unit Testing**.  
-The goal is to demonstrate writing clean, testable code and verifying it using xUnit tests.
+# Contacts Manager - xUnit Testing Playground
 
----
-
-## 📚 Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [How to Run](#how-to-run)
-- [Running Unit Tests](#running-unit-tests)
-- [Author](#author)
+This is a simple **ASP.NET Core Web API** project created to **demonstrate and apply unit testing using xUnit** through real-world examples covering contacts and countries management.
 
 ---
 
-## 📌 Overview
+## What’s Implemented in This Project
 
-The project manages countries and persons (contacts), providing full CRUD operations with validations.  
-Each operation is covered with **xUnit** unit tests, ensuring code reliability and correctness.
+### 1. **xUnit Basics**
+- Setup of xUnit in ASP.NET Core project.
+- Writing simple and structured unit tests.
 
----
+### 2. **Country Management Features**
+- Add Country
+- Get All Countries
+- Get Country by ID
+- Full xUnit test coverage for each operation.
 
-## ✅ Features
+### 3. **Person Management Features**
+- Add Person with model validation.
+- Get Person by ID
+- Get All Persons
+- Get Filtered Persons
+- Get Sorted Persons
+- Update Person
+- Delete Person
+- Each action includes both **implementation** and **xUnit test** to verify behavior.
 
-### Country Management
-- Add Country ✅
-- Get All Countries ✅
-- Get Country by ID ✅
+### 4. **Validation Handling**
+- Model validation for Add/Update Person operations.
+- xUnit tests for invalid inputs and edge cases.
 
-### Person Management
-- Add Person (with validations) ✅
-- Get Person by ID ✅
-- Get All Persons ✅
-- Get Filtered Persons ✅
-- Get Sorted Persons ✅
-- Update Person ✅
-- Delete Person ✅
-
-All features are tested with **xUnit test cases** (Happy & Unhappy paths).
-
----
-
-## 🛠 Tech Stack
-
-- **ASP.NET Core Web API**
-- **xUnit** for unit testing
-- **FluentAssertions** (optional for assertions)
-- **TestOutputHelper** for test output tracking
-- **C# 10 / .NET 6 or later**
+### 5. **TestOutputHelper**
+- Use of `ITestOutputHelper` for better visibility of test execution and debugging.
 
 ---
 
-## 🗂 Project Structure
-
-/xUnit
-│
-├── Controllers
-│ └── CountryController.cs
-│ └── PersonController.cs
-│
-├── Models
-│ └── DTOs / Entities / ViewModels
-│
-├── Services
-│ └── Interfaces & Implementations
-│
-├── Tests
-│ └── xUnit test files per feature
-│ └── CountryTests
-│ └── PersonTests
-│
-└── Program.cs / Startup.cs
-
+## Technologies Used
+- ASP.NET Core Web API
+- C#
+- .NET 6+
+- xUnit Testing Framework
+- Visual Studio 2022 / VS Code
 
 ---
 
-## ▶️ How to Run
+## Project Structure
+- `Controllers/` → API endpoints for Person & Country
+- `Models/` → Entities, DTOs, and Validation Rules
+- `Services/` → Business logic and data operations
+- `Tests/` → xUnit test classes per feature
+- `Program.cs` → App configuration and service registration
 
-1. Clone the repo:
-   ```bash
-  - git clone https://github.com/MuhammedReda263/xUnit.git
-   - cd xUnit
+---
 
-- dotnet restore
-- dotnet run
-- dotnet test
+## How to Run
 
-## 👤 Author
-- Muhammed Reda
-- 📧 moreda263@gmail.com
-- 🔗 LinkedIn Profile
-
-
+```bash
+git clone https://github.com/MuhammedReda263/xUnit.git
+cd xUnit
+dotnet restore
+dotnet run
